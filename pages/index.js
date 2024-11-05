@@ -24,7 +24,7 @@ export default function Home() {
         <div className="container">
             <h1>회원 관리 ERP</h1>
             <Link href="/admin">
-                <button>관리자 전용12</button>
+                <button>관리자 전용</button>
             </Link>
             <h2>내 인바디 검색</h2>
             <input
