@@ -1,16 +1,20 @@
 // pages/data.js
 import { useState, useEffect } from 'react';
+import axios from 'axios'; // axios를 사용하여 API 호출
 
 export default function DataPage() {
     const [data, setData] = useState([]);
     const [searchId, setSearchId] = useState('');
     const [filteredData, setFilteredData] = useState([]);
 
-    // 로컬 스토리지에서 데이터 불러오기
+    // 서버에서 데이터 불러오기
     useEffect(() => {
-        const storedData = JSON.parse(localStorage.getItem('formData')) || [];
-        setData(storedData);
-        setFilteredData(storedData); // 초기에는 모든 데이터 표시
+        const fetchData = async () => {
+            const response = await axios.get('http://localhost:5000/data'); // API URL
+            setData(response.data);
+            setFilteredData(response.data); // 초기에는 모든 데이터 표시
+        };
+        fetchData();
     }, []);
 
     const handleSearch = () => {
@@ -18,10 +22,11 @@ export default function DataPage() {
         setFilteredData(result);
     };
 
-    const handleDelete = (index) => {
+    const handleDelete = async (index) => {
+        const itemToDelete = filteredData[index];
+        await axios.delete(`http://localhost:5000/data/${itemToDelete.id}`); // API URL
         const updatedData = data.filter((_, i) => i !== index);
         setData(updatedData);
-        localStorage.setItem('formData', JSON.stringify(updatedData));
         setFilteredData(updatedData); // 필터링된 데이터도 업데이트
     };
 
