@@ -26,7 +26,7 @@ export default function Home() {
             <Link href="/admin">
                 <button>관리자 전용</button>
             </Link>
-            <h2>내 인바디 검색12</h2>
+            <h2>내 인바디 검색</h2>
             <input
                 type="text"
                 placeholder="회원번호 검색"
